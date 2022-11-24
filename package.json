@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev:server": "nodemon src/server.js",
+    "dev:cluster": "DEBUG='puppeteer-cluster:*' node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "lil-http-terminator": "^1.2.2",
+    "puppeteer": "^19.3.0",
+    "puppeteer-cluster": "^0.23.0",
+    "puppeteer-extra": "^3.3.4",
+    "puppeteer-extra-plugin-stealth": "^2.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
+  }
+}
