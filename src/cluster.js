@@ -1,8 +1,8 @@
+import { availableParallelism } from 'node:os';
+import { executablePath } from 'puppeteer';
 import { Cluster } from 'puppeteer-cluster';
 import puppeteer from 'puppeteer-extra';
-import { executablePath } from 'puppeteer';
 import Stealth from 'puppeteer-extra-plugin-stealth';
-import { cpus } from 'node:os';
 
 puppeteer.use(Stealth());
 
@@ -13,7 +13,7 @@ export const cluster = await Cluster.launch({
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || executablePath()
   },
   timeout: 60 * 10000, // Максимальное время выполнения одной задачи (1 минута)
-  maxConcurrency: cpus().length,
+  maxConcurrency: availableParallelism(),
   concurrency: Cluster.CONCURRENCY_CONTEXT,
   monitor: true
 });

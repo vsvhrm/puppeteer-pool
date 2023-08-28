@@ -24,8 +24,8 @@ app.get('/html', async (req, res) => {
   try {
     const html = await cluster.execute(req.query, htmlTask);
     return res.send(html);
-  } catch (err) {
-    return res.status(404).json({ name: err.name, message: err.message });
+  } catch (error) {
+    return res.status(404).json({ name: error.name, message: error.message });
   }
 });
 
@@ -47,10 +47,16 @@ const server = app.listen(port, () => {
 async function shutdown() {
   console.log('Shutting down...');
   const httpTerminator = createHttpTerminator({ server });
-  await httpTerminator.terminate();
+  const { success, code, message, error } = await httpTerminator.terminate();
   await cluster.idle();
   await cluster.close();
-  process.exit();
+  if (success) {
+    console.log(message);
+    process.exit(0);
+  } else {
+    console.error(`${code} ${message} ${error}`);
+    process.exit(1);
+  }
 }
 
 process.on('SIGTERM', shutdown);
