@@ -1,12 +1,16 @@
-# Running the server
+# Puppeteer Pool
 
-### Building the image
+A server application with an API for scraping web pages. It allows you to receive HTML and cookies from specified URLs.
+
+## Running the server
+
+**Building the image**
 
 ```sh
 docker build --pull --rm -t puppeteer-cluster .
 ```
 
-### Running the image
+**Running the image**
 
 ```sh
 docker run --name pptr-cluster --init --cap-add=SYS_ADMIN -d -p 3000:3000 puppeteer-cluster
@@ -14,9 +18,7 @@ docker run --name pptr-cluster --init --cap-add=SYS_ADMIN -d -p 3000:3000 puppet
 
 `--cap-add=SYS_ADMIN` capability is needed to enable Chromium sandbox that makes the browser more secure. Alternatively, it should be possible to start the browser binary with the `--no-sandbox` flag.
 
-# API Reference
-
-## Endpoints
+## API Endpoints
 
 | HTTP Method |  Route   |       Description        |
 |:-----------:|:--------:|:------------------------:|
@@ -25,9 +27,7 @@ docker run --name pptr-cluster --init --cap-add=SYS_ADMIN -d -p 3000:3000 puppet
 
 Endpoint `/html` can be useful for debugging in the browser. For example, searching for DOM elements using DevTools.
 
-## Request and response format
-
-### Parameters
+### Request Parameters
 
 | Parameter  |  Type  |       Default        | Description                         |
 |:-----------|:------:|:--------------------:|:------------------------------------|
@@ -55,7 +55,7 @@ Maximum page load time is restricted to 60 seconds (1 minute).
 }
 ```
 
-| Parameter |  Type  | Description                                    |
+| Property  |  Type  | Description                                    |
 |-----------|:------:|:-----------------------------------------------|
 | status    | string | Status code received from the scraped web page |
 | content   | string | Content from the scraped web page              |
